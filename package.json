@@ -1,19 +1,26 @@
 {
   "name": "ai-studio",
-  "private": true,
+  "productName": "AI Studio",
+  "description": "A desktop app for AI Studio",
   "version": "0.0.1",
+  "author": {
+    "name": "scholar0",
+    "email": "dpr55520@gmail.com"
+  },
+  "appId": "com.db.aistudio",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "dev": "node dev/electron-dev.mjs",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "node dev/electron-build.mjs"
   },
   "dependencies": {},
   "devDependencies": {
     "chalk": "^5.2.0",
     "chokidar": "^3.5.3",
     "electron": "^24.3.1",
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "electron-builder": "^23.6.0",
+    "esbuild": "^0.17.19",
+    "typescript": "^5.0.2"
   }
 }

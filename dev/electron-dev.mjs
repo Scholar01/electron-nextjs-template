@@ -1,13 +1,11 @@
 import {spawn} from 'child_process';
-import * as path from 'path';
-import {build} from "esbuild";
 import chokidar from "chokidar";
 import chalk from 'chalk';
+import {buildMain, mainPath, preloadPath, rendererPath, waitFor} from "./electron-helper.mjs";
+
+process.env.NODE_ENV = 'development'
 
 
-const rendererPath = path.join(process.cwd(), 'src', 'renderer')
-const mainPath = path.join(process.cwd(), 'src', 'main')
-const preloadPath = path.join(process.cwd(), 'src', 'preload')
 let electronProcess = null;
 
 
@@ -26,14 +24,8 @@ async function start() {
     }
 
     const startMainProcess = async () => {
-        await build({
-            entryPoints: [path.join(mainPath, 'entry.ts'), path.join(preloadPath, 'preload.ts')],
-            bundle: true,
-            platform: "node",
-            outdir: 'dist',
-            external: ["electron"],
-        })
-        electronProcess = spawn('electron', ["./dist/main/entry.js", 'http://localhost:3000'], {
+        await buildMain();
+        electronProcess = spawn('electron', ["./dist/entry.js", 'http://localhost:3000'], {
             cwd: process.cwd(),
             stdio: "inherit",
         });
@@ -57,7 +49,6 @@ async function start() {
 
     }
 
-    const waitFor = (ms) => new Promise((r) => setTimeout(r, ms));
     process.on('SIGINT', killAllProcesses);
     process.on('SIGTERM', killAllProcesses);
     process.on('exit', killAllProcesses);

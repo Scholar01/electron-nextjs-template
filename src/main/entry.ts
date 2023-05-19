@@ -1,5 +1,5 @@
 import {app, BrowserWindow} from "electron";
-import * as path from "path";
+import {CustomScheme} from "./CustomScheme.ts";
 
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true";
@@ -26,7 +26,7 @@ app.whenReady().then(() => {
             spellcheck: false, //   禁用拼写检查
             disableHtmlFullscreenWindowResize: true, // 禁用窗口全屏时的窗口大小调整
             //加载preload/preload.ts
-            preload: path.resolve(__dirname, '../', 'preload/preload.js'),
+            preload: `${__dirname}/preload.js`,
         },
         titleBarStyle: 'hidden',
         titleBarOverlay: true,
@@ -41,6 +41,8 @@ app.whenReady().then(() => {
     if (process.argv[2]) {
         mainWindow.loadURL(process.argv[2]).then();
     } else {
+        CustomScheme.registerScheme();
+        mainWindow.loadURL(`app://index.html`).then();
     }
 
 })
