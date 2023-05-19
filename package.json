@@ -1,0 +1,19 @@
+{
+  "name": "ai-studio",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node dev/electron-dev.mjs",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chalk": "^5.2.0",
+    "chokidar": "^3.5.3",
+    "electron": "^24.3.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2"
+  }
+}
